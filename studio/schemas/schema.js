@@ -9,6 +9,8 @@ import author from './documents/author'
 import category from './documents/category'
 import post from './documents/post'
 import siteSettings from './documents/siteSettings'
+import frontPage from './documents/frontPage'
+import images from './documents/images'
 
 // Object types
 import bodyPortableText from './objects/bodyPortableText'
@@ -27,6 +29,8 @@ export default createSchema({
     // The following are document types which will appear
     // in the studio.
     siteSettings,
+    frontPage,
+    images,
     post,
     category,
     author,

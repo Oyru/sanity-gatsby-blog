@@ -1,8 +1,8 @@
 module.exports = {
-  extends: ['standard', 'standard-react', 'plugin:import/errors', 'plugin:import/warnings'],
+  extends: ['standard', 'standard-react'],
   rules: {
     'react/prop-types': 0,
-    'object-curly-spacing': ['error', 'never']
+    'space-before-function-paren': ['error', 'never']
   },
   settings: {
     react: {

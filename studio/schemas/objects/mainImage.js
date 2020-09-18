@@ -7,9 +7,25 @@ export default {
   },
   fields: [
     {
-      name: 'caption',
+      name: 'title',
       type: 'string',
-      title: 'Caption',
+      title: 'Title',
+      options: {
+        isHighlighted: true
+      }
+    },
+    {
+      name: 'credit',
+      type: 'string',
+      title: 'Credit',
+      options: {
+        isHighlighted: true
+      }
+    },
+    {
+      name: 'story',
+      type: 'text',
+      title: 'Story',
       options: {
         isHighlighted: true
       }
@@ -19,7 +35,6 @@ export default {
       type: 'string',
       title: 'Alternative text',
       description: 'Important for SEO and accessiblity.',
-      validation: Rule => Rule.error('You have to fill out the alternative text.').required(),
       options: {
         isHighlighted: true
       }
@@ -28,7 +43,7 @@ export default {
   preview: {
     select: {
       imageUrl: 'asset.url',
-      title: 'caption'
+      title: 'title'
     }
   }
 }

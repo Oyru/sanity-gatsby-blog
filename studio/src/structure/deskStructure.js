@@ -1,17 +1,12 @@
 import S from '@sanity/desk-tool/structure-builder'
 import MdSettings from 'react-icons/lib/md/settings'
-import {
-  MdPerson,
-  MdDescription,
-  MdLocalOffer
-} from 'react-icons/lib/md'
+import { MdPerson, MdDescription, MdLocalOffer, MdFindInPage, MdImage } from 'react-icons/lib/md'
 import IframePreview from '../previews/IframePreview'
 
 // Web preview configuration
 const remoteURL = 'https://sanity-gatsby-blog-web-fjpkprnx.netlify.app'
 const localURL = 'http://localhost:8000'
-const previewURL =
-  window.location.hostname === 'localhost' ? localURL : remoteURL
+const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 
 export const getDefaultDocumentNode = props => {
   /**
@@ -58,10 +53,25 @@ export default () =>
         ),
       S.divider(),
       S.listItem()
+        .title('Front page')
+        .icon(MdFindInPage)
+        .child(
+          S.editor()
+            .id('frontPage')
+            .schemaType('frontPage')
+            .documentId('frontPage')
+        ),
+      S.divider(),
+      S.listItem()
         .title('Blog posts')
         .icon(MdDescription)
         .schemaType('post')
         .child(S.documentTypeList('post').title('Blog posts')),
+      S.listItem()
+        .title('Images')
+        .icon(MdImage)
+        .schemaType('images')
+        .child(S.documentTypeList('images').title('Images')),
       S.listItem()
         .title('Authors')
         .icon(MdPerson)
@@ -77,7 +87,7 @@ export default () =>
       // defined the structure above.
       ...S.documentTypeListItems().filter(
         listItem =>
-          !['category', 'author', 'post', 'siteSettings'].includes(
+          !['category', 'author', 'post', 'siteSettings', 'frontPage', 'images'].includes(
             listItem.getId()
           )
       )
