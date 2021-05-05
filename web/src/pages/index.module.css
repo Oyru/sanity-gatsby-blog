@@ -1,0 +1,22 @@
+.masonryGrid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -1rem;
+  width: auto;
+}
+
+.masonryGridColumn {
+  padding-left: 1rem;
+  background-clip: padding-box;
+}
+
+.info {
+  margin: 0;
+}
+
+p {
+  font-size: 2em;
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+}

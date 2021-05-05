@@ -1,0 +1,23 @@
+.gridHeader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  background-color: white;
+  padding: 0 1rem;
+}
+
+.gridHeaderTitle {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gridHeaderItem {
+  cursor: pointer;
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
+}

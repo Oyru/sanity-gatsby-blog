@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { graphql } from 'gatsby'
 import {
   mapEdgesToNodes,
@@ -10,6 +10,14 @@ import Container from '../components/container'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/seo'
 import Layout from '../containers/layout'
+import Grid from '../components/grid'
+import GridHeader from '../components/grid-header'
+import BlogPostPreview from '../components/blog-post-preview'
+import WorkItem from '../components/work-item'
+import Masonry from 'react-masonry-css'
+import useResize from './use-resize'
+
+import styles from './index.module.css'
 
 export const query = graphql`
   fragment SanityImage on SanityMainImage {
@@ -79,8 +87,8 @@ const IndexPage = props => {
   const site = (data || {}).site
   const postNodes = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
-      .filter(filterOutDocsWithoutSlugs)
-      .filter(filterOutDocsPublishedInTheFuture)
+        .filter(filterOutDocsWithoutSlugs)
+        .filter(filterOutDocsPublishedInTheFuture)
     : []
 
   if (!site) {
@@ -89,25 +97,74 @@ const IndexPage = props => {
     )
   }
 
+  const infoRef = useRef(null)
+  const contactRef = useRef(null)
+  const workRef = useRef(null)
+
+  const testRef = useRef(null)
+
+  const [textIndent, setTextIndent] = useState(0)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  const handleResize = () => {
+    if (testRef.current !== null) {
+      let { left } = testRef.current.getBoundingClientRect()
+      let indent = left - 16
+      setTextIndent(indent > 0 ? indent : 0)
+    }
+
+    if (window.innerWidth > 768) {
+      setIsDesktop(true)
+    } else {
+      setIsDesktop(false)
+    }
+  }
+
+  useResize(handleResize)
+
   return (
-    <Layout>
-      <SEO
+    <Container>
+      <GridHeader
         title={site.title}
-        description={site.description}
-        keywords={site.keywords}
+        infoIndentRef={testRef}
+        infoRef={infoRef}
+        contactRef={contactRef}
+        workRef={workRef}
       />
-      <Container>
-        <h1>Welcome to {site.title}</h1>
-        <p>{site.subtitle}</p>
-        {postNodes && (
-          <BlogPostPreviewList
-            title='Latest blog posts'
-            nodes={postNodes}
-            browseMoreHref='/archive/'
-          />
-        )}
-      </Container>
-    </Layout>
+      <div style={{ marginTop: 50 }}>
+        <Grid>
+          <Grid.Item col='1 / 7' ref={infoRef}>
+            <p className={styles.info} style={{ textIndent: textIndent }}>
+              Mitt navn er Øyvind Ruud. Jeg jobber som strategisk rådgiver og prosjektleder for
+              Knowit Experience med tverrfaglig kompetanse innen strategi, design, teknologi og
+              kommunikasjon. Jeg er 35 år, oppvokst i Øvre Eiker og har bakgrunn fra high end
+              fashion marketing i London. Jeg søker på stillingen som Market Communication Manager
+              for Snøhetta fordi jeg ønsker å jobbe strategisk, langsiktig, tverrfaglig og målrettet
+              med prosjekter jeg brenner for.
+            </p>
+          </Grid.Item>
+          <Grid.Item col='3 / 7' ref={contactRef}>
+            <p>
+              {' '}
+              +47 40641402
+              <br />
+              <a href='mailto:mail@oyvindruud.com'>mail@oyvindruud.com</a>
+            </p>
+          </Grid.Item>
+        </Grid>
+        <div ref={workRef}>
+          <Masonry
+            breakpointCols={isDesktop ? 2 : 1}
+            className={styles.masonryGrid}
+            columnClassName={styles.masonryGridColumn}
+          >
+            {postNodes.map(node => (
+              <WorkItem key={node.id} {...node} />
+            ))}
+          </Masonry>
+        </div>
+      </div>
+    </Container>
   )
 }
 
