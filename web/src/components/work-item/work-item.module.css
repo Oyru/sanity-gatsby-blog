@@ -8,3 +8,7 @@
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
+
+.title::before {
+  content: '\2192 ';
+}

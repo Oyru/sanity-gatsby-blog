@@ -1,0 +1,4 @@
+@font-face {
+  font-family: 'MonumentGrotesk';
+  src: local('MonumentGrotesk'), url(../fonts/MonumentGrotesk-Regular.woff) format('woff');
+}

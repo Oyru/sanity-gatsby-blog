@@ -1,5 +1,5 @@
 :root {
-  --font-family-sans: helvetica, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-sans: MonumentGrotesk, helvetica, -apple-system, BlinkMacSystemFont, sans-serif;
 
   --color-black: #000000;
   --color-dark-gray: #32373e;
@@ -8,6 +8,8 @@
   --color-very-light-gray: #e7ebed;
   --color-white: #fff;
   --color-accent: #156dff;
+
+  --gutter: 20px;
 
   /* Typography */
   --unit: 16;

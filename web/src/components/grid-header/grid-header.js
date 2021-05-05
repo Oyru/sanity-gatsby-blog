@@ -3,12 +3,14 @@ import React from 'react'
 import styles from './grid-header.module.css'
 import Grid from '../grid'
 
-const GridHeader = ({ infoIndentRef, infoRef, contactRef, workRef, title }) => {
+const GridHeader = ({ infoIndentRef, contactIndentRef, infoRef, contactRef, workRef, title }) => {
   const scrollToRef = ref => {
-    console.log(ref)
+    console.log(ref, ref.current.offsetTop)
     if (ref.current !== null) {
-      //   ref.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' })
-      window.scrollTo(0, ref.current.offsetTop - 30)
+      const yOffset = -60
+      const element = ref.current
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
     }
   }
 
@@ -16,27 +18,21 @@ const GridHeader = ({ infoIndentRef, infoRef, contactRef, workRef, title }) => {
     <div className={styles.gridHeader}>
       <Grid>
         <Grid.Item col='1'>
-          <div className={styles.gridHeaderTitle}>
-            <p>{title}</p>
-          </div>
+          <div className={styles.gridHeaderTitle}>{title}</div>
         </Grid.Item>
         <Grid.Item col='2'>
-          <div
-            ref={infoIndentRef}
-            className={styles.gridHeaderItem}
-            onClick={() => scrollToRef(infoRef)}
-          >
-            <p>INFO</p>
+          <div ref={infoIndentRef} onClick={() => scrollToRef(infoRef)}>
+            <div className={styles.gridHeaderItem}>INFO</div>
           </div>
         </Grid.Item>
         <Grid.Item col='3'>
-          <div className={styles.gridHeaderItem} onClick={() => scrollToRef(contactRef)}>
-            <p> CONTACT</p>
+          <div ref={contactIndentRef} onClick={() => scrollToRef(contactRef)}>
+            <div className={styles.gridHeaderItem}>CONTACT</div>
           </div>
         </Grid.Item>
         <Grid.Item col='4'>
           <div className={styles.gridHeaderItem} onClick={() => scrollToRef(workRef)}>
-            <p> WORK</p>
+            WORK
           </div>
         </Grid.Item>
       </Grid>

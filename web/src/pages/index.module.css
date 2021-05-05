@@ -2,21 +2,30 @@
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
   display: flex;
-  margin-left: -1rem;
+  margin-left: -20px;
   width: auto;
 }
 
 .masonryGridColumn {
-  padding-left: 1rem;
+  padding-left: 20px;
   background-clip: padding-box;
+}
+
+.masonryContainer {
+  box-sizing: border-box;
+  padding-top: 1.25rem;
 }
 
 .info {
   margin: 0;
 }
 
+.contact {
+  margin: 0;
+}
+
 p {
-  font-size: 2em;
+  /* font-size: 2em; */
   margin-bottom: 0.2em;
   margin-top: 0.2em;
 }

@@ -101,23 +101,37 @@ const IndexPage = props => {
   const contactRef = useRef(null)
   const workRef = useRef(null)
 
-  const testRef = useRef(null)
-
+  const infoIndentRef = useRef(null)
+  const contactIndentRef = useRef(null)
   const [textIndent, setTextIndent] = useState(0)
+  const [contactTextIndent, setContactTextIndent] = useState(0)
+
   const [isDesktop, setIsDesktop] = useState(false)
 
   const handleResize = () => {
-    if (testRef.current !== null) {
-      let { left } = testRef.current.getBoundingClientRect()
-      let indent = left - 16
-      setTextIndent(indent > 0 ? indent : 0)
-    }
-
+    let localIsDesktop = false
     if (window.innerWidth > 768) {
       setIsDesktop(true)
+      localIsDesktop = true
     } else {
       setIsDesktop(false)
+      localIsDesktop = false
     }
+
+    let infoIndent = getTextIndent(infoIndentRef, localIsDesktop)
+    let contactIndent = getTextIndent(contactIndentRef, localIsDesktop)
+
+    setTextIndent(infoIndent)
+    setContactTextIndent(localIsDesktop ? contactIndent : infoIndent)
+  }
+
+  const getTextIndent = (ref, isDesktop) => {
+    if (ref.current !== null) {
+      let { left } = ref.current.getBoundingClientRect()
+      let indent = isDesktop ? left - 20 : left - 10
+      return indent > 0 ? indent : 0
+    }
+    return 0
   }
 
   useResize(handleResize)
@@ -126,12 +140,13 @@ const IndexPage = props => {
     <Container>
       <GridHeader
         title={site.title}
-        infoIndentRef={testRef}
+        infoIndentRef={infoIndentRef}
+        contactIndentRef={contactIndentRef}
         infoRef={infoRef}
         contactRef={contactRef}
         workRef={workRef}
       />
-      <div style={{ marginTop: 50 }}>
+      <div>
         <Grid>
           <Grid.Item col='1 / 7' ref={infoRef}>
             <p className={styles.info} style={{ textIndent: textIndent }}>
@@ -143,8 +158,8 @@ const IndexPage = props => {
               med prosjekter jeg brenner for.
             </p>
           </Grid.Item>
-          <Grid.Item col='3 / 7' ref={contactRef}>
-            <p>
+          <Grid.Item col='1 / 7' ref={contactRef}>
+            <p style={{ marginLeft: contactTextIndent }} className={styles.contact}>
               {' '}
               +47 40641402
               <br />
@@ -152,7 +167,7 @@ const IndexPage = props => {
             </p>
           </Grid.Item>
         </Grid>
-        <div ref={workRef}>
+        <div className={styles.masonryContainer} ref={workRef}>
           <Masonry
             breakpointCols={isDesktop ? 2 : 1}
             className={styles.masonryGrid}
